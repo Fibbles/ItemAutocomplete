@@ -1,3 +1,5 @@
+(This is a fork of Darkfinken's excellent addon. I've updated it for Wrath Classic as he no longer seems to be working on the project.)
+
 # ItemAutocomplete
 
 This is an autocomplete addon for item links in WoW Classic. It integrates with your chat and is triggered with a single character (default <kbd>[</kbd>), making every single item in the game available with a few key strokes.

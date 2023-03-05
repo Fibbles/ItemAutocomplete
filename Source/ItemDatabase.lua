@@ -5,17 +5,38 @@ local util = require 'Utility.Functions'
 local utf8 = require 'Shared.UTF8'
 
 -- Consts
-local const = util.ReadOnly({
-  -- See: https://tbc.wowhead.com/items?filter=151;1;187815
-  itemIds = util.IsBcc() and {
-    { 1, 39656 }, -- Defaults
-    { 43516 }, -- Brutal Nether Drake
-    { 122270 }, -- WoW Token (AH)
-    { 122284 }, -- WoW Token
-    { 172070 }, -- Customer Service Package
-    { 180089 }, -- Panda Collar
-    { 184865, 187815 },
-  } or { -- See: https://classic.wowhead.com/items?filter=151;2;24284
+
+-- Selects the correct item ID set based on client version
+local function ItemIDHelper()
+  if util.IsWrath() then
+    return {
+      { 1, 54798 }, -- Defaults
+      { 122270 }, -- WoW Token (AH)
+      { 122284 }, -- WoW Token
+      { 172070 }, -- Customer Service Package
+      { 180089 }, -- Panda Collar
+      { 184865, 187435 }, -- TBC lazy catchall
+      { 190179, 190309 }, -- Incubus Quest
+      { 191060, 191061 }, -- Black Sack of Gems
+      { 200060 }, -- Hoplet
+      { 202195 }, -- Pure Stratholme Holy Water
+      { 202269 }, -- Bounty Satchel
+      { 204385 }, -- Glyph of Reckoning
+    }
+  elseif util.IsBcc() then
+    return { -- See: https://tbc.wowhead.com/items?filter=151;1;187815
+      { 1, 39656 }, -- Defaults
+      { 43516 }, -- Brutal Nether Drake
+      { 122270 }, -- WoW Token (AH)
+      { 122284 }, -- WoW Token
+      { 172070 }, -- Customer Service Package
+      { 180089 }, -- Panda Collar
+      { 184865, 187435 }, -- TBC lazy catchall
+      { 190179, 190309 }, -- Incubus Quest
+      { 191060, 191061 }, -- Black Sack of Gems
+    }
+  else
+    return { -- See: https://classic.wowhead.com/items?filter=151;2;24284
     { 1, 24283 }, -- Defaults
     { 122270 }, -- WoW Token (AH)
     { 122284 }, -- WoW Token
@@ -24,7 +45,12 @@ local const = util.ReadOnly({
     { 184937, 184938 }, -- Chronoboon Displacers
     { 189419, 189421 }, -- Fire Resist Gear
     { 189426, 189427 }, -- Raid Consumables
-  },
+  }
+  end
+end
+
+local const = util.ReadOnly({
+  itemIds = ItemIDHelper(),
   itemsQueriedPerUpdate = 50,
 })
 
